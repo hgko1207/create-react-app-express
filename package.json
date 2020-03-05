@@ -3,16 +3,26 @@
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && yarn start",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "dev:server": "cd client && yarn build && cd .. && yarn start",
+    "start": "node server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "gh-pages": "^2.2.0"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hgko1207/create-react-app-express.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "create-react-app"
+  ]
 }
