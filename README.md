@@ -135,6 +135,34 @@ export default App;
 yarn dev
 ```
 
+## Heroku 배포
+
+- server.js 안에 아래 내용을 추가한다.
+
+```js
+if (process.env.NODE_ENV === "production") {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  // Handle React routing, return all requests to React app
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
+```
+
+- package.json 안에 아래 내용을 추가한다.
+
+```json
+"start": "node server.js",
+"heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+```
+
+- [Heroku 사이트](https://dashboard.heroku.com/)를 접속하여 계정을 생성하고 로그인한다.
+- create a new app 한 후 Deploy 탭을 선택한다.
+- GitHub 계정을 연결 한 후 Manual deploy 한다.
+
 # Reference
 
 - [How To Make create-react-app work with a Node Back-end API](https://www.freecodecamp.org/news/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0/)
+- [How to deploy a React + Node app to Heroku in 3 minutes without the command line](https://www.freecodecamp.org/news/deploy-a-react-node-app-to/)
