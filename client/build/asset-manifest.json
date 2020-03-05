@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "./static/js/main.8081489b.chunk.js",
-    "main.js.map": "./static/js/main.8081489b.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.b177dbb5.js",
-    "runtime-main.js.map": "./static/js/runtime-main.b177dbb5.js.map",
-    "static/js/2.080c7286.chunk.js": "./static/js/2.080c7286.chunk.js",
-    "static/js/2.080c7286.chunk.js.map": "./static/js/2.080c7286.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.163eb5b244618ddd6dd473c6b17f078d.js": "./precache-manifest.163eb5b244618ddd6dd473c6b17f078d.js",
-    "service-worker.js": "./service-worker.js",
-    "static/js/2.080c7286.chunk.js.LICENSE.txt": "./static/js/2.080c7286.chunk.js.LICENSE.txt"
+    "main.js": "/create-react-app-express/static/js/main.8081489b.chunk.js",
+    "main.js.map": "/create-react-app-express/static/js/main.8081489b.chunk.js.map",
+    "runtime-main.js": "/create-react-app-express/static/js/runtime-main.b537ab44.js",
+    "runtime-main.js.map": "/create-react-app-express/static/js/runtime-main.b537ab44.js.map",
+    "static/js/2.080c7286.chunk.js": "/create-react-app-express/static/js/2.080c7286.chunk.js",
+    "static/js/2.080c7286.chunk.js.map": "/create-react-app-express/static/js/2.080c7286.chunk.js.map",
+    "index.html": "/create-react-app-express/index.html",
+    "precache-manifest.0d7f6a71feef090cddbc07912dbec01e.js": "/create-react-app-express/precache-manifest.0d7f6a71feef090cddbc07912dbec01e.js",
+    "service-worker.js": "/create-react-app-express/service-worker.js",
+    "static/js/2.080c7286.chunk.js.LICENSE.txt": "/create-react-app-express/static/js/2.080c7286.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.b177dbb5.js",
+    "static/js/runtime-main.b537ab44.js",
     "static/js/2.080c7286.chunk.js",
     "static/js/main.8081489b.chunk.js"
   ]
