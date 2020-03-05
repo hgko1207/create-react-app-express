@@ -1,68 +1,140 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Node Back-end + React-app
 
-## Available Scripts
+### 1. create-react-app
 
-In the project directory, you can run:
+```bash
+npx create-react-app create-react-app-express
+cd create-react-app-express
+mkdir client
+```
 
-### `yarn start`
+### 2. 구조 변경
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 파일을 /client 디렉토리로 이동시킨다.
+  - src
+  - public
+  - package.json
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### 3. 서버 환경 설정
 
-### `yarn test`
+- 루트 경로에 package.json 파일을 생성하고 아래 내용을 복사한다.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```json
+{
+  "name": "example-create-react-app-express",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
+```
 
-### `yarn build`
+### 4. nodemon 전역 설치
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm i nodemon -g
+yarn
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### 5. 서버 파일 생성
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- server.js 파일을 생성하고 아래 내용을 복사한다.
 
-### `yarn eject`
+```js
+const express = require("express");
+const bodyParser = require("body-parser");
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+const app = express();
+const port = process.env.PORT || 5000;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+app.get("/api/hello", (req, res) => {
+  res.send({ express: "Hello From Express" });
+});
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+app.post("/api/world", (req, res) => {
+  console.log(req.body);
+  res.send(`I received your POST request. This is what you sent me: ${req.body.post}`);
+});
 
-## Learn More
+app.listen(port, () => console.log(`Listening on port ${port}`));
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 6. 서버 실행
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 서버를 실행 후 http://localhost:5000/api/hello 경로로 이동하여 결과를 확인한다.
 
-### Code Splitting
+```bash
+node server.js
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### 7. Client 설정
 
-### Analyzing the Bundle Size
+- client 경로에 있는 package.json 파일 맨 아래에 다음 줄을 추가한다.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```json
+"proxy": "http://localhost:5000/"
+```
 
-### Making a Progressive Web App
+### 8. Client 작성
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- /client/src/App.js 안에 Express API를 호출하는 코드를 추가한다.
 
-### Advanced Configuration
+```js
+import React, { Component } from "react";
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+class App extends Component {
+  state = {
+    response: "",
+    post: "",
+    responseToPost: ""
+  };
 
-### Deployment
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+  }
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+  callApi = async () => {
+    const response = await fetch("/api/hello");
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
 
-### `yarn build` fails to minify
+    return body;
+  };
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  render() {
+    return (
+      <div className="App">
+        <div>{this.state.response}</div>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+### 9. Client 실행
+
+- 루트 경로에 가서 실행 명령을 입력한다.
+
+```bash
+yarn dev
+```
+
+# Reference
+
+- [How To Make create-react-app work with a Node Back-end API](https://www.freecodecamp.org/news/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0/)
